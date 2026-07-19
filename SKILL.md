@@ -20,18 +20,6 @@ io:
 **Preserve**: Author's personality, intent, and key information. Retain warmth and humor from the original where appropriate.
 **Explain**: Every change with a brief reason (under 20 words).
 
-## Constraints
-
-- **Context sufficiency**: Infer recipient (client/partner/team), channel (LINE/Email/document), and intent (request/update/negotiation/proposal) from the draft and the request itself (salutation, register, stated purpose). Record inferences as assumptions in the change notes. Ask only when a remaining ambiguity would change the Tone Spectrum register — one question at a time, with a best-guess default attached.
-- **Paraphrase depth**: Preserve all main subjects and key commitments. Tone shifts must not exceed one level on the Tone Spectrum. If achieving the desired tone requires changing more than 3 fundamental message elements, ask user to prioritize which changes are essential.
-- **Length**: Within ±15% of original word count.
-- **Content**: Rephrase only. No facts added, removed, or invented.
-- **Voice**: Preserve author's personality, phrases, idioms, and humor. Remove only: filler words ("basically", "like"), hedging language ("maybe", "probably"), and redundant apologies.
-- **Issue scope per pass**: When the message contains ≤3 issue types, address all in order. When it contains >3 issue types, address the first 3 (in table order), then ask user which remaining issues to prioritize.
-- **Iteration convergence**: After 2 complete iterations on the same issue type, stop and ask for specific direction before attempting a third iteration.
-- **Format stability**: After the initial blockquote delivery, maintain the same line breaks and paragraph structure in all subsequent versions.
-- **When to decline**: Decline and recommend the correct skill if the task is: translating to another language, creating new content (not refining existing), legal or compliance review, or applying an external style guide.
-
 ## Tone Spectrum
 
 | Register | Context | Language Marker | Constraint |
@@ -42,17 +30,37 @@ io:
 
 Identify the register before polishing; do not shift without explicit request.
 
+## Constraints
+
+**One-Question Rule**: Ask at most one clarifying question per exchange. Only ask if genuinely ambiguous AND the answer would change the Tone Spectrum register. Always provide a best-guess default; never hold output hostage to an answer.
+
+**Output-Only Mode**: When the user requests "直接給", "只輸出結果", "output only", or similar, never substitute a question for the deliverable — deliver the polished message immediately without asking. Record assumptions as one line: "Assumed: recipient=X, channel=Y, intent=Z".
+
+**Priority Issues Limit**: Identify all issue types from the Priority Issues table. If ≤3 types present, address all. If >3 types, address the first 3 (in table order); ask user which remaining issues to prioritize before iterating.
+
+**Iteration Protocol**: If the user provides feedback on the same issue type a second time, ask them to specify which aspect to focus on next—do not re-attempt iteration unprompted.
+
+**Paraphrase Depth**: Preserve all main subjects and key commitments. Tone shifts must not exceed one level on the Tone Spectrum. If achieving the desired tone requires changing more than 3 fundamental message elements (subject, obligation, timeline, recipient expectation, or key information), ask user to prioritize which changes are essential.
+
+**Length**: Within ±15% of original word count.
+
+**Content**: Rephrase only. No facts added, removed, or invented.
+
+**Voice**: Preserve author's personality, phrases, idioms, and humor. Remove only: filler words ("basically", "like"), hedging language ("maybe", "probably"), and redundant apologies.
+
+**Format Stability**: After the initial blockquote delivery, maintain the same line breaks and paragraph structure in all subsequent versions.
+
+**Decline**: Recommend a different skill if the task is translating to another language, creating new content (not refining existing), legal or compliance review, or applying an external style guide.
+
 ## Workflow
 
 ### 1. Identify Context
 
-Determine recipient, channel, and intent from what the draft and the request already reveal (salutation, register, stated purpose). Ask only about what remains genuinely ambiguous AND would change the Tone Spectrum register — one question at a time, with a best-guess default. When the user asks for output only, never substitute a question for the deliverable: polish under the most reasonable reading and append one line "Assumed: recipient=X, channel=Y, intent=Z".
-
-Example: "This is an email to Client X about contract renewal. Intent: maintain warmth while setting a clear deadline."
+Determine recipient, channel, and intent from the draft and request. Use best-guess inference where ambiguous (default: Professional-warm register, email, neutral intent). If output-only mode, proceed directly to diagnosis.
 
 ### 2. Diagnose Priority Issues
 
-Identify which issue types from the Priority Issues table are present in the message. If ≤3 types, address all. If >3 types, address the first 3 (in table order), then ask user which remaining issues to prioritize.
+Identify which issue types are present. Address top 3; if >3 types exist, ask user for prioritization.
 
 | Issue | Example | Fix Rule |
 |-------|---------|----------|
@@ -74,11 +82,11 @@ Identify which issue types from the Priority Issues table are present in the mes
 
 Example: `[line 3, phrase "可能也許"] hedging-overload: 「可能也許」→ removed (commit to timeline)`.
 
-Each note under 20 words. Reference the original phrase from the message in quotes. Issue type must match the Priority Issues table.
+Each note under 20 words. Reference the original phrase in quotes.
 
-### 4. Iterate on Feedback
+### 4. Respond to Feedback
 
-When the user provides feedback on the same issue type a second time, ask them to specify which aspect they want to focus on next, rather than attempting another iteration unprompted.
+Accept refinements and re-output. If the user requests changes on the same issue type twice, ask them to specify the aspect to focus on.
 
 ## Chinese Business Pitfalls
 
