@@ -28,7 +28,7 @@ io:
 | **Professional-warm** | Client messages, emails | "Let's get this done on schedule—happy to help" | Default. Balance professionalism with approachability |
 | **Casual-professional** | Internal team, familiar collaborators | "Let's wrap this up by EOW" | Conversational, informal if unambiguous |
 
-**How to select**: Determine register from recipient role (external = formal/warm, internal = casual). If ambiguous, default to Professional-warm.
+**How to select**: If recipient role is external (legal stakeholders, government, senior executives, first-time contacts) → Formal. If external but ongoing relationship (clients, vendors) → Professional-warm. If internal (direct reports, core team) → Casual-professional. If ambiguous → default to Professional-warm.
 
 ## Chinese Business Pitfalls
 
@@ -45,17 +45,26 @@ io:
 
 ### 1. Identify Context
 
-Determine recipient, channel, and intent from the draft and request.
-- **Default if not specified**: recipient = peer/stakeholder, channel = email, tone = professional-warm.
-- **If user provides context**, use it. If output-only mode is requested, proceed directly to step 2.
+**Decision sequence:**
+1. **Does the user provide recipient, channel, or tone preference?** → Use what they provide.
+2. **Does the user request output-only mode?** (phrases: 「直接給」「只輸出結果」「just output」「skip explanation」) → Skip to Step 3, omit explanations.
+3. **No context provided?** → Use defaults: recipient = peer/stakeholder, channel = email, tone = professional-warm.
+
+**Example**:
+- User: "Polish this email to my client about project delays"
+- Q1: Recipient/tone provided? Yes (external client mentioned)
+- Q2: Output-only? No
+- → Recipient formality: Client = Professional-warm
+- → Proceed to Step 2
 
 ### 2. Diagnose Priority Issues
 
-**Procedure**:
-1. Scan the draft for each issue type in the table below (top-to-bottom order = priority rank).
-2. Count total types present.
-3. **If ≤3 types**: Address all of them.
-4. **If >3 types**: Address the first 3 in table order; then ask "Which of the remaining issues should I prioritize?"
+**Exact procedure:**
+1. Read the entire draft once.
+2. Mark which issue types (from table below) are present. Use top-to-bottom table order as priority rank.
+3. Count total issue types found.
+4. **If 3 or fewer issue types present** → Address all of them in Step 3.
+5. **If more than 3 issue types present** → Address only the first 3 in table order. Then ask user: "The following issues remain: [list]. Which should I prioritize?"
 
 | Issue | Example | Fix Rule |
 |-------|---------|----------|
@@ -69,57 +78,102 @@ Determine recipient, channel, and intent from the draft and request.
 
 ### 3. Output Format
 
-**Polished version** in blockquote (copy-paste ready):
+**For normal mode:**
+- **Polished version** in blockquote (copy-paste ready):
+  > [polished message]
+- **Change notes**: One line per change.
+  - Format: `[line X, phrase "xxx"] issue-type: original → polished (reason)`.
+  - Example: `[line 3, phrase "可能也許"] hedging-overload: 「可能也許」→ removed (commit to timeline)`.
+  - Each note: under 20 words.
 
-> [polished message]
-
-**Change notes**: One line per change.
-- Format: `[line X, phrase "xxx"] issue-type: original → polished (reason)`.
-- Example: `[line 3, phrase "可能也許"] hedging-overload: 「可能也許」→ removed (commit to timeline)`.
-- Each note: under 20 words.
+**For output-only mode:**
+- Polished message in blockquote only.
+- Single assumption line: `Assumed: recipient=[role], channel=[email/LINE/etc], register=[formal/professional-warm/casual-professional]`.
+- No change notes. No explanation.
 
 ### 4. Respond to Feedback
 
-Accept refinements and re-output.
+Accept refinements and re-output in same format as Step 3 (normal or output-only, whichever was used initially).
 
 ## Constraints
 
-**Recipient Formality Map**: Explicit mapping for register selection when recipient type is specified:
+### Scope Gate (Evaluate First)
+
+Decline and recommend another skill for:
+- Translating to another language (use translator skill).
+- Creating new content from scratch (use content-writer skill).
+- Legal or compliance review (refer to legal counsel).
+- Applying corporate style guide, AP style, or external brand standards (use branding skill).
+- Messages where the main goal is tone-shifting without content refinement (use brainstorming skill instead).
+
+If the draft falls into any of these categories, state the category and suggest the alternative. **Evaluate scope before proceeding to Step 1.**
+
+### Constraint Priority Hierarchy
+
+If constraints appear to conflict, resolve in this order:
+1. **Scope Gate** — Never proceed if request falls outside scope.
+2. **Register Lock-in** — Once set, preserve register unless user explicitly requests shift.
+3. **Paraphrase Depth** — Content integrity (main subject, key commitment, intent) takes precedence over stylistic polish.
+4. **Length** — ±15% word count rule applies unless user explicitly requests expansion/compression.
+5. **Voice** — Author's personality and tone are preserved above mechanical refinement.
+6. **Format Stability** — Once delivered, structure is maintained in all revisions.
+
+### Recipient Formality Map
+
+Use this to determine register when recipient is specified:
 - **Formal**: Legal stakeholders, government, senior external executives, compliance officers, first-time external contacts.
 - **Professional-warm**: Clients, vendors, internal directors, colleagues across teams.
 - **Casual-professional**: Direct reports, core team members, long-term collaborators with established rapport.
 
-**Register Lock-in**: Once register is determined (step 1), hold it constant across all subsequent versions unless user explicitly requests a shift. Do not drift toward neighboring registers due to rewording efficiency.
+### Register Lock-in
 
-**Tone Drift Tolerance**: Tone shifts must not exceed one level on the Tone Spectrum. Cannot change from Formal to Casual-professional in a single pass. If user feedback suggests a two-level shift is needed, ask for confirmation: "This would shift from [register A] to [register C]—is this intentional?"
+Once register is determined in Step 1, do not shift it in subsequent versions unless the user explicitly requests a register change. If refinements could push toward a neighboring register, stay within the locked register.
 
-**Do Not Polish If**: Decline and recommend another skill for:
-- Translating to another language
-- Creating new content (not refining existing draft)
-- Legal or compliance review (out of scope; refer to legal skill)
-- Applying external style guide (corporate branding guide, AP style, etc.)
-- Messages where tone-shifting is the primary goal and content is secondary (use brainstorming skill instead)
+### Tone Drift Tolerance
 
-**One-Question Rule**: Ask at most one clarifying question per exchange. Always provide a best-guess default.
+Tone must not shift more than one level on the Tone Spectrum in a single pass. (Cannot jump from Formal to Casual-professional.) If user feedback indicates a two-level shift is needed, ask: "This would shift from [register A] to [register C]—is this intentional?"
 
-**Output-Only Mode**: When the user explicitly requests output-only delivery using any of these phrases:
-- 「直接給」「只輸出結果」「just output」「skip explanation」「output only」「don't explain」
-→ Deliver the polished message immediately in blockquote format (Step 3).
-→ Add one line of assumptions: `Assumed: recipient=[specific role or type], channel=[email/LINE/etc], register=[formal/professional-warm/casual-professional]`.
-→ Skip all explanations and change notes.
+### Output-Only Mode (Delivery Guarantee)
 
-**Priority Issues Limit**: Addressed in Workflow Step 2. If >3 issue types present, handle first 3 in table order and ask user to prioritize remaining issues explicitly.
+When the user requests "直接給", "只輸出結果", "output only", or similar, never substitute a question for the deliverable — deliver the polished message immediately without asking. Record assumptions as one line: `Assumed: recipient=X, channel=Y, intent=Z`.
 
-**Iteration Protocol**: When user provides feedback on the same issue type in a **follow-up message** (second round of corrections for that type), ask for explicit direction: "Which aspect of [issue-type] should I focus on?" Do not re-polish that issue type without user guidance.
+### Assumption Transparency (Mandatory)
 
-**Paraphrase Depth**: Preserve all main subjects and key commitments. Tone shifts must not exceed one level on the Tone Spectrum.
-- Define "fundamental elements" as: (1) primary subject, (2) key commitment or promise, (3) stated intent.
-- If changing >2 of these 3 elements, ask the user which to prioritize.
+State all assumptions about recipient, channel, and register whenever they are inferred rather than provided. Format: `Assumed: recipient=[role], channel=[email/LINE/etc], register=[formal/professional-warm/casual-professional]`.
 
-**Length**: Within ±15% of original word count.
+This applies in both normal and output-only modes. No assumption is implicit—all must be surfaced.
 
-**Content**: Rephrase only. No facts added, removed, or invented.
+### Paraphrase Depth
 
-**Voice**: Preserve author's personality, phrases, idioms, and humor. Remove: filler words ("basically", "like"), hedging language ("maybe", "probably"), redundant apologies.
+Preserve all main subjects and key commitments. Define "fundamental content" as: (1) primary subject, (2) key commitment or promise, (3) stated intent. If changing more than 2 of these 3, ask the user which to prioritize.
 
-**Format Stability**: After initial blockquote delivery, maintain the same line breaks and paragraph structure in all subsequent versions.
+### Length
+
+Polished version must be within ±15% of original word count.
+
+### Content
+
+Rephrase only. No facts added, removed, or invented.
+
+### Voice
+
+Preserve author's personality, phrases, idioms, and humor. Remove: filler words ("basically", "like"), hedging language ("maybe", "probably"), redundant apologies.
+
+### Format Stability
+
+After initial blockquote delivery, maintain the same line breaks and paragraph structure in all subsequent versions.
+
+### One-Question Rule
+
+Ask at most one clarifying question per exchange. Always provide a best-guess default.
+
+### Iteration Stopping Rule (Mandatory)
+
+**When to stop iterating:**
+1. After 2 revisions on the same issue type within one exchange, ask: "Which specific aspect of [issue-type] should I focus on?" Do not revise a third time without explicit direction.
+2. If user indicates satisfaction ("looks good", "perfect", "thanks", "done"), deliver final version. Offer further adjustments only if user initiates.
+3. If user requests fundamental restructuring (not polish), acknowledge and recommend escalation: "This goes beyond polish—I'd recommend a design or brainstorming skill instead."
+
+### Iteration Protocol
+
+When user requests a second round of corrections for the same issue type, ask for explicit direction before re-polishing: "Which specific aspect of [issue-type] should I focus on?" Do not assume what the user wants.
